@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪨, 📄, ✂️</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Sometype+Mono&display=swap');
+    body{
+        text-align: center;
+       background-color: rgb(42, 42, 42);
+       font-family: 'Sometype Mono', monospace;
+    }
+    #wins, #losses {
+            display: inline-block;
+            margin: 5px;
+            margin-top: 5px;
+        }
+    
+    button{
+        padding: 10px;
+        background-color: black;
+        border: none;
+        font-family: 'Sometype Mono', monospace;
+        color: white;
+    }
+    button:hover{
+        padding: 10px;
+        background-color: rgb(93, 93, 93);
+        border: none;
+        font-family: 'Sometype Mono', monospace;
+        color: white;
+    }
+    #computerAnswer{
+        text-align: left;
+        margin-left: 25%;
+    }
+    #results{
+        margin-top: 15px;
+    }
+    input{
+        padding: 10px;
+    }
+
+</style>
+<body>
+    <div style="background-color: rgb(250, 250, 250); width: 500px; margin-left: 33%;padding: 2%; border-radius: 10%; margin-top: 5%; border:solid; border-width: 2px;">
+    <h1 style="text-align: center;margin-left: 0%;margin-top: -5px;">ROCK, PAPER, SCISSORS</h1>
+    
+    <p style="font-weight: 300;">To begin, please type your choice...
+        <div style="text-align: center; margin-bottom: 50px;">
+          🪨 ROCK | 📄 PAPER | ✂️ SCISSORS
+    </div>
+    </p>
+    
+
+    <input id="userChoice">
+    <button onclick="play()">Enter</button>
+    <button onclick="replay()">Replay</button><br>
+    <p id = "computerAnswer">Computer's choice: ...</p><br>
+
+    <p id = "results">...</p>
+
+    <p id="wins">Wins: 0</p>
+    <p id="losses">Losses: 0</p>
+</div>
+    <script>
+        let winsCount = 0;
+        let lossesCount = 0;
+        const choices = ['rock', 'paper', 'scissors'];
+
+        function computerRandom() {
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        function play() {
+            let userChoice = document.getElementById("userChoice").value.toLowerCase(); // Convert to lowercase for case-insensitive comparison
+            let computerChoice = computerRandom();
+            document.getElementById("computerAnswer").innerText = "Computer's choice: " + computerChoice;
+
+            // Update wins and losses based on game result
+            if (userChoice === computerChoice) {
+                document.getElementById("results").innerText = "It's a tie! 🎀"
+            } else if (
+                (userChoice === "rock" && computerChoice === "scissors") ||
+                (userChoice === "paper" && computerChoice === "rock") ||
+                (userChoice === "scissors" && computerChoice === "paper")
+            ) {
+                // User wins
+                winsCount++;
+                document.getElementById("results").innerText = "You win! 🏆"
+
+            } else {
+                // User loses
+                document.getElementById("results").innerText = "You lose! 🤡 "
+
+                lossesCount++;
+            }
+
+            // Update the displayed wins and losses
+            document.getElementById("wins").innerText = "Wins: " + winsCount;
+            document.getElementById("losses").innerText = "Losses: " + lossesCount;
+        }
+
+
+        function replay() {
+            // Reset the wins and losses count
+            document.getElementById("userChoice").value = "";
+            document.getElementById("computerAnswer").innerText = "Computer's choice: ...";
+
+            computerRandom();
+
+            // Update the displayed wins and losses
+            document.getElementById("wins").innerText = "Wins: " + winsCount;
+            document.getElementById("losses").innerText = "Losses: " + lossesCount;
+            document.getElementById("results").innerText = "..."
+
+        }
+    </script>
+</body>
+</html>
